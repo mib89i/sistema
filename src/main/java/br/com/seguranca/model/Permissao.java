@@ -26,7 +26,7 @@ public class Permissao implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Column(name = "nome", length = 255)
     private String nome;
     @Column(name = "descricao", length = 255)
@@ -36,25 +36,25 @@ public class Permissao implements Serializable {
     private Pagina pagina;       
 
     public Permissao() {
-        this.id = -1;
+        this.id = null;
         this.nome = "";
         this.descricao = "";
         this.pagina = new Pagina();
     }
     
 
-    public Permissao(int id, String nome, String descricao, Pagina pagina) {
+    public Permissao(Integer id, String nome, String descricao, Pagina pagina) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.pagina = pagina;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

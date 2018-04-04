@@ -26,7 +26,7 @@ public class PermissaoGrupo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @JoinColumn(name = "id_permissao", referencedColumnName = "id")
     @ManyToOne
     private Permissao permissao;
@@ -35,22 +35,22 @@ public class PermissaoGrupo implements Serializable {
     private Grupo grupo;
 
     public PermissaoGrupo() {
-        this.id = -1;
+        this.id = null;
         this.permissao = new Permissao();
         this.grupo = new Grupo();
     }
 
-    public PermissaoGrupo(int id, Permissao permissao, Grupo grupo) {
+    public PermissaoGrupo(Integer id, Permissao permissao, Grupo grupo) {
         this.id = id;
         this.permissao = permissao;
         this.grupo = grupo;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

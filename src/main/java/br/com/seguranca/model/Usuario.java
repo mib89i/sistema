@@ -10,7 +10,7 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Column(name = "usuario", length = 255)
     private String usuario;
     @Column(name = "senha", length = 255)
@@ -22,14 +22,14 @@ public class Usuario implements Serializable {
     private Grupo grupo;
 
     public Usuario() {
-        this.id = -1;
+        this.id = null;
         this.usuario = "";
         this.senha = "";
         this.administrador = false;
         this.grupo = new Grupo();        
     }
 
-    public Usuario(int id, String usuario, String senha, Boolean administrador, Grupo grupo) {
+    public Usuario(Integer id, String usuario, String senha, Boolean administrador, Grupo grupo) {
         this.id = id;
         this.usuario = usuario;
         this.senha = senha;
@@ -37,11 +37,11 @@ public class Usuario implements Serializable {
         this.grupo = grupo;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

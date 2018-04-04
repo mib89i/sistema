@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Generica</title>
+    </h:head>
+
+    <f:subview id="header">
+        <ui:include src="templates/header.xhtml"/>
+    </f:subview>
+
+    <h:body>
+        <div class="container">
+            <h:form>
+                <h:outputScript>load_masks();</h:outputScript>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="painel_de_controle.xhtml">Início</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Generica</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </h:form>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>GENERICA</h3>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h:messages showDetail="true" class="alert #{mensagemFlash.ALERT}">
+                        <f:passThroughAttribute name="role" value="alert" />
+                    </h:messages>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <h:form id="form_generica_lista_opcoes">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <h:outputLink class="nav-link" value="generica.xhtml">GENERICA</h:outputLink>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+
+                <div class="col-sm-9">
+
+                    <h:form id="form_generica">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        
+                    </h:form>
+                </div>
+
+            </div>
+            
+        </div><!-- /container -->
+    </h:body>
+
+    <f:subview id="footer">
+        <ui:include src="templates/footer.xhtml"/>
+    </f:subview>
+</html>
+

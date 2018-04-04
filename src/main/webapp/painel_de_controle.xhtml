@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Painel de Controle</title>
+    </h:head>
+
+    <f:subview id="header">
+        <ui:include src="templates/header.xhtml"/>
+    </f:subview>
+
+    <h:body>
+        <div class="container">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="painel_de_controle.xhtml">Início</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Painel de Controle</li>
+                </ol>
+            </nav>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>PAINEL DE CONTROLE</h3>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h:messages id="message_painel_de_controle" showDetail="true" class="alert #{mensagemFlash.ALERT}">
+                        <f:passThroughAttribute name="role" value="alert" />
+                    </h:messages>
+                </div>
+            </div>
+
+            <h:form>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-2">
+                        <div class="card panel-shadow" style="text-align: center">
+                            <div class="card-body">
+                                <h:outputLink value="lista_pessoa.xhtml" style="font-size: 14pt">
+                                    <h:graphicImage value="resources/images/lista_pessoa.png" alt="ICON PESSOA" styleClass="img-fluid" />
+                                </h:outputLink>
+                                <h:outputLink value="lista_pessoa.xhtml" style="font-size: 14pt">CADASTRO DE PESSOA</h:outputLink>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-3 col-md-2">
+                        <div class="card panel-shadow" style="text-align: center">
+                            <div class="card-body">
+                                <h:outputLink value="permissoes.xhtml" style="font-size: 14pt">
+                                    <h:graphicImage value="resources/images/grupo.png" alt="ICON SETORES" styleClass="img-fluid center-block"/>
+                                </h:outputLink>
+                                <h:outputLink value="permissoes.xhtml" style="font-size: 14pt">PERMISSÕES</h:outputLink>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+
+    <f:subview id="footer">
+        <ui:include src="templates/footer.xhtml"/>
+    </f:subview>
+</html>
+

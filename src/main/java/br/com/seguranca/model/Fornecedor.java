@@ -1,25 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.seguranca.model;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-/**
- *
- * @author Claudemir Rtools
- */
 @Entity
-@Table(name = "cargo")
-public class Cargo implements Serializable {
+@Table(name = "fornecedor")
+public class Fornecedor implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,15 +13,19 @@ public class Cargo implements Serializable {
     private Integer id;
     @Column(name = "nome", length = 1000)
     private String nome;
-
-    public Cargo() {
+    @Column(name = "cnpj", length = 100)
+    private String cnpj;
+    
+    public Fornecedor() {
         this.id = null;
         this.nome = "";
+        this.cnpj = "";
     }
 
-    public Cargo(Integer id, String nome) {
+    public Fornecedor(Integer id, String nome, String cnpj) {
         this.id = id;
         this.nome = nome;
+        this.cnpj = cnpj;
     }
 
     public Integer getId() {
@@ -52,6 +42,14 @@ public class Cargo implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
 }

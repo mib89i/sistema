@@ -23,25 +23,25 @@ public class Grupo  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Column(name = "nome", length = 255)
     private String nome;
 
     public Grupo() {
-        this.id = -1;
+        this.id = null;
         this.nome = "";
     }
     
-    public Grupo(int id, String nome) {
+    public Grupo(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Lista de Fornecedores</title>
+    </h:head>
+
+    <f:subview id="header">
+        <ui:include src="templates/header.xhtml"/>
+    </f:subview>
+
+    <h:body>
+        <div class="container">
+            <h:form>
+                <h:outputScript>load_masks();</h:outputScript>
+                <div class="row">
+                    <div class="col">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="painel_de_controle.xhtml">Início</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Lista de Fornecedores</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </h:form>
+
+            <div class="row">
+                <div class="col">
+                    <h3>LISTA DE FORNECEDORES</h3>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h:messages showDetail="true" class="alert #{mensagemFlash.ALERT}">
+                        <f:passThroughAttribute name="role" value="alert" />
+                    </h:messages>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <h:form id="form_fornecedor_lista_opcoes">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <h:outputLink class="nav-link" value="fornecedor.xhtml">NOVO FORNECEDOR</h:outputLink>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+
+                <div class="col-sm-9">
+
+                    <h:form id="form_fornecedor">
+                        
+                        <div class="table-responsive">
+                            <h:dataTable value="#{fornecedorController.listaFornecedor}" var="linha_fornecedor" styleClass="table table-striped">
+                                <h:column>
+                                    <f:facet name="header">Código</f:facet>
+                                    <h:outputLink value="fornecedor.xhtml?id=#{linha_fornecedor.id}" disabled="#{usuarioController.temPermissao('fornecedor') eq false}">#{linha_fornecedor.id}</h:outputLink>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Nome</f:facet>
+                                    <h:outputLink value="fornecedor.xhtml?id=#{linha_fornecedor.id}" disabled="#{usuarioController.temPermissao('fornecedor') eq false}">#{linha_fornecedor.nome}</h:outputLink>
+                                </h:column>
+
+                            </h:dataTable>
+                        </div>
+                        
+                    </h:form>
+                </div>
+
+            </div>
+            
+        </div><!-- /container -->
+    </h:body>
+
+    <f:subview id="footer">
+        <ui:include src="templates/footer.xhtml"/>
+    </f:subview>
+</html>
+

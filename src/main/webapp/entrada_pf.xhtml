@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Entrada de Produtos</title>
+    </h:head>
+
+    <f:subview id="header">
+        <ui:include src="templates/header.xhtml"/>
+    </f:subview>
+
+    <h:body>
+        <div class="container">
+            <h:form>
+                <h:outputScript>load_masks();</h:outputScript>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="painel_de_controle.xhtml">Início</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Entrada de Produtos</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </h:form>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>ENTRADA DE PRODUTOS</h3>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h:messages id="message_id" showDetail="true" class="alert #{mensagemFlash.ALERT}">
+                        <f:passThroughAttribute name="role" value="alert" />
+                    </h:messages>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <h:form id="form_entrada_pf_lista_opcoes">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <h:outputLink class="nav-link" value="entrada_pf.xhtml">NOVA ENTRADA</h:outputLink>
+                                <h:outputLink class="nav-link" value="#">RELATÓRIO DE ENTRADA</h:outputLink>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+
+                <div class="col-sm-9">
+
+                    <h:form id="form_entrada_pf">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Fornecedor</label>
+                                    <h:selectOneMenu value="#{entradaPFController.indexListaFornecedor}" styleClass="form-control">
+                                        <f:ajax event="change" render="@this" />
+                                        <f:selectItems value="#{entradaPFController.listaFornecedor}" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Produto</label>
+                                    <h:selectOneMenu value="#{entradaPFController.indexListaPF}" styleClass="form-control">
+                                        <f:ajax event="change" render="@this" />
+                                        <f:selectItems value="#{entradaPFController.listaPF}" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Kg</label>
+                                    <h:inputText value="#{entradaPFController.produtoFQ.quantidade}" styleClass="form-control text-center">
+                                        <f:ajax event="change" render="@this" />
+                                        <f:passThroughAttribute name="placeholder" value="Kg" />
+                                    </h:inputText>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12">
+                                <button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#modal_salvar">
+                                    <i class="fas fa-save" style="margin-right: 10px"></i>SALVAR
+                                </button>
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+                            <div class="col">
+                                <h:dataTable value="#{entradaPFController.listaProdutoFQ}" var="linha_pfq" styleClass="table table-striped">
+                                    <h:column>
+                                        <f:facet name="header">Código</f:facet>
+                                        <h:outputLink value="#" >#{linha_pfq.id}</h:outputLink>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Produto</f:facet>
+                                        <h:outputLink value="#">#{linha_pfq.produtoFornecedor.nome}</h:outputLink>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Kg</f:facet>
+                                        <h:outputLink value="#">#{linha_pfq.quantidade}</h:outputLink>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header"></f:facet>
+                                        <h:commandLink action="#{entradaPFController.selecionarPFQ(linha_pfq)}" styleClass="btn btn-danger btn-sm" style="float: right">
+                                            <i class="fas fa-trash-alt"></i>
+                                            <f:ajax event="action" render="form_entrada_pf:panel_excluir" />
+                                            <f:passThroughAttribute name="data-toggle" value="modal"/>
+                                            <f:passThroughAttribute name="data-target" value="#modal_excluir"/>
+                                        </h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal_salvar" tabindex="-1" role="dialog" aria-labelledby="myModalSalvarLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">SALVAR REGISTRO</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>DESEJA REALMENTE SALVAR ESTE REGISTRO?</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
+                                        <h:commandButton styleClass="btn btn-primary" value="SIM" action="#{entradaPFController.salvar()}">
+                                            <f:ajax event="action" render="form_entrada_pf message_id"/>
+                                            <f:passThroughAttribute name="data-dismiss" value="modal" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal_excluir" tabindex="-1" role="dialog" aria-labelledby="myModalExcluirLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">EXCLUIR REGISTRO</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <h:panelGroup id="panel_excluir" layout="block" class="modal-body">
+                                        <h4 style="color: red">DESEJA REALMENTE EXCLUIR ESTE REGISTRO?</h4>
+                                        <h5><b>##{entradaPFController.produtoFQSelecionado.id}</b> - #{entradaPFController.produtoFQSelecionado.produtoFornecedor.nome} - Qnt: #{entradaPFController.produtoFQSelecionado.quantidade}</h5>
+                                    </h:panelGroup>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
+                                        <h:commandButton styleClass="btn btn-primary" value="SIM" action="#{entradaPFController.excluir()}">
+                                            <f:ajax event="action" render="form_entrada_pf message_id"/>
+                                            <f:passThroughAttribute name="data-dismiss" value="modal" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </h:form>
+                </div>
+
+            </div>
+
+        </div><!-- /container -->
+    </h:body>
+
+    <f:subview id="footer">
+        <ui:include src="templates/footer.xhtml"/>
+    </f:subview>
+</html>
+

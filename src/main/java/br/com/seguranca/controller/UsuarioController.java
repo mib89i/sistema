@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author Claudemir Rtools
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class UsuarioController implements Serializable {
 
     private Usuario usuario = new Usuario();
@@ -31,8 +32,6 @@ public class UsuarioController implements Serializable {
     private Pessoa pessoa = new Pessoa();
 
     public String entrar() {
-        limpar_sessao_antes_de_iniciar();
-
         UsuarioDao dao = new UsuarioDao();
 
         Usuario u = dao.pesquisaUsuario(usuario.getUsuario(), usuario.getSenha());
@@ -46,7 +45,7 @@ public class UsuarioController implements Serializable {
                 return null;
             }
 
-            Sessao.put("sessao_usuario", u);
+            Sessao.put("sessao_pessoa_usuario", pessoa);
             Object redirect_page = Sessao.get("sessao_redirect_page", true);
 
             sessaoMessageLogin = "";
@@ -72,20 +71,13 @@ public class UsuarioController implements Serializable {
         return "index";
     }
 
-    public void limpar_sessao_antes_de_iniciar() {
-        Sessao.remove("grupoController");
-        Sessao.remove("mensagemController");
-        Sessao.remove("notaController");
-        Sessao.remove("pessoaController");
-        Sessao.remove("cargoController");
-    }
 
     public void validacao() throws IOException {
         HttpServletRequest pagina_requerida = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 
-        String uri_pagina = pagina_requerida.getRequestURI().replace("/etec/", "");
+        String uri_pagina = pagina_requerida.getRequestURI().replace("/sistema/", "");
 
-        if (!Sessao.exist("sessao_usuario")) {
+        if (!Sessao.exist("sessao_pessoa_usuario")) {
             Sessao.put("sessao_redirect_page", uri_pagina);
             Sessao.put("sessao_message_login", "ENTRE NO SISTEMA PARA TER ACESSO A ESSA PÁGINA");
 
@@ -93,18 +85,20 @@ public class UsuarioController implements Serializable {
         }
 
         valida_permissao_tela(uri_pagina);
-//        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("indicaAcesso") == null) {
-//            FacesContext.getCurrentInstance().getExternalContext().redirect("/Sindical/acessoNegado.jsf");
-//            return null;
-//        }
     }
 
     public void valida_permissao_tela(String pagina) throws IOException {
+        
+        // VERIFICAR PÁGINAS E PERMISSÕES DEPOIS
+        if (1 == 1){
+            return;
+        }
+        
         switch (pagina) {
             case "painel_de_controle.xhtml":
                 return;
-            case "lista_pessoas.xhtml":
-                if (temPermissao("listar_pessoas")) {
+            case "lista_pessoa.xhtml":
+                if (temPermissao("lista_pessoa")) {
                     return;
                 }
                 break;
@@ -113,48 +107,8 @@ public class UsuarioController implements Serializable {
                     return;
                 }
                 break;
-            case "lista_empresas.xhtml":
-                if (temPermissao("listar_empresas")) {
-                    return;
-                }
-                break;
-            case "grupo.xhtml":
-                if (temPermissao("listar_grupos")) {
-                    return;
-                }
-                break;
-            case "lista_cargos.xhtml":
-                if (temPermissao("listar_cargos")) {
-                    return;
-                }
-                break;
-            case "cargo.xhtml":
-                if (temPermissao("cargo")) {
-                    return;
-                }
-                break;
-            case "empresa.xhtml":
-                if (temPermissao("empresa")) {
-                    return;
-                }
-                break;
-            case "remessa.xhtml":
-                if (temPermissao("remessa")) {
-                    return;
-                }
-                break;
-            case "lista_remessas.xhtml":
-                if (temPermissao("listar_remessas")) {
-                    return;
-                }
-                break;
-            case "lista_protocolo.xhtml":
-                if (temPermissao("listar_protocolo")) {
-                    return;
-                }
-                break;
-            case "protocolo.xhtml":
-                if (temPermissao("protocolo")) {
+            case "permissoes.xhtml":
+                if (temPermissao("permissoes")) {
                     return;
                 }
                 break;
@@ -178,11 +132,11 @@ public class UsuarioController implements Serializable {
     }
 
     public Boolean temPermissao(String descricao_permissao) {
-        if (!Sessao.exist("sessao_usuario")) {
+        if (!Sessao.exist("sessao_pessoa_usuario")) {
             return false;
         }
 
-        Usuario u = (Usuario) Sessao.get("sessao_usuario");
+        Usuario u = ((Pessoa) Sessao.get("sessao_pessoa_usuario")).getUsuario();
         if (u.getAdministrador() == true) {
             return true;
         }
@@ -201,9 +155,6 @@ public class UsuarioController implements Serializable {
         this.usuario = usuario;
     }
 
-    /**
-     * @return the sessaoMessageLogin
-     */
     public String getSessaoMessageLogin() {
         if (Sessao.exist("sessao_message_login")) {
             sessaoMessageLogin = (String) Sessao.get("sessao_message_login", true);
@@ -211,14 +162,14 @@ public class UsuarioController implements Serializable {
         return sessaoMessageLogin;
     }
 
-    /**
-     * @param sessaoMessageLogin the sessaoMessageLogin to set
-     */
     public void setSessaoMessageLogin(String sessaoMessageLogin) {
         this.sessaoMessageLogin = sessaoMessageLogin;
     }
 
     public Pessoa getPessoa() {
+        if (Sessao.exist("sessao_pessoa_usuario")) {
+            pessoa = (Pessoa) Sessao.get("sessao_pessoa_usuario");
+        }
         return pessoa;
     }
 
@@ -227,10 +178,10 @@ public class UsuarioController implements Serializable {
     }
 
     public Usuario getUsuarioSessao() {
-        return (Usuario) Sessao.get("sessao_usuario");
+        return ((Pessoa) Sessao.get("sessao_pessoa_usuario")).getUsuario();
     }
     
     public static Usuario usuarioSessao() {
-        return (Usuario) Sessao.get("sessao_usuario");
+        return ((Pessoa) Sessao.get("sessao_pessoa_usuario")).getUsuario();
     }
 }

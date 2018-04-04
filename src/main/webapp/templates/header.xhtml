@@ -8,22 +8,29 @@
         <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />		
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <h:outputStylesheet name="bootstrap/css/bootstrap.css"/>
         <h:outputStylesheet name="css/sticky_footer.css"/>
         <h:outputStylesheet name="css/styles.css"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
-        <h:outputScript name="bootstrap/js/bootstrap.js" />
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.3/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha384-xpQNcoacYF/4TKVs2uD3sXyaQYs49wxwEmeFNkOUgun6SLWdEbaCOv8hGaB9jLxt" crossorigin="anonymous" />
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
         <h:outputScript name="js/jquery.mask.min.js" />
         <h:outputScript name="js/js_mask.js" />
         <h:outputScript name="js/scripts.js" />
+
+        <script src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 
         <script type="text/javascript">
 
         </script>
 
         <style type="text/css">
-            
+
         </style>
+
     </h:head>
 
     <f:metadata>  
@@ -31,64 +38,64 @@
     </f:metadata>
 
     <h:body>
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Navegação</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <h:outputLink value="painel_de_controle.xhtml" styleClass="navbar-brand">ETEC</h:outputLink>
+        <h:form>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#" style="font-weight: bold">RIBERGELO</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="painel_de_controle.xhtml">INÍCIO <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                CADASTROS
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <h:outputLink value="#{!usuarioController.temPermissao('lista_pessoa') ? '#' : 'lista_pessoa.xhtml'}" class="dropdown-item #{!usuarioController.temPermissao('lista_pessoa') ? 'disabled' : ''}">PESSOA</h:outputLink>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                FORNECEDORES
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <h:outputLink value="#{!usuarioController.temPermissao('lista_fornecedor') ? '#' : 'lista_fornecedor.xhtml'}" class="dropdown-item #{!usuarioController.temPermissao('lista_fornecedor') ? 'disabled' : ''}">LISTA DE FORNECEDORES</h:outputLink>
+                                <h:outputLink value="#{!usuarioController.temPermissao('entrada_pf') ? '#' : 'entrada_pf.xhtml'}" class="dropdown-item #{!usuarioController.temPermissao('entrada_pf') ? 'disabled' : ''}">ENTRADA DE PRODUTO</h:outputLink>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ESTOQUE
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <h:outputLink value="#{!usuarioController.temPermissao('estoque') ? '#' : 'estoque.xhtml'}" class="dropdown-item #{!usuarioController.temPermissao('estoque') ? 'disabled' : ''}">GERENCIAMENTO</h:outputLink>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav navbar-right">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">#{usuarioController.pessoa.nome}</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <h:commandLink styleClass="nav-link" value="Sair" action="#{usuarioController.sair()}" />
+                        </li>
+
+                    </ul>
                 </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <h:form>
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastros <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li class="#{!usuarioController.temPermissao('listar_pessoas') ? 'disabled' : ''}"><h:outputLink value="lista_pessoas.xhtml">Pessoas</h:outputLink></li>
-                                    <li class="#{!usuarioController.temPermissao('listar_empresas') ? 'disabled' : ''}"><h:outputLink value="lista_empresas.xhtml">Empresas</h:outputLink></li>
-                                    <li class="#{!usuarioController.temPermissao('listar_grupos') ? 'disabled' : ''}"><h:outputLink value="grupo.xhtml">Setores</h:outputLink></li>
-                                    <li class="#{!usuarioController.temPermissao('listar_cargos') ? 'disabled' : ''}"><h:outputLink value="lista_cargos.xhtml">Cargos</h:outputLink></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administração<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li class="#{!usuarioController.temPermissao('listar_oficios') ? 'disabled' : ''}"><h:outputLink value="lista_oficios.xhtml">Ofício</h:outputLink></li>
-                                    <li class="#{!usuarioController.temPermissao('listar_remessas') ? 'disabled' : ''}"><h:outputLink value="lista_remessas.xhtml">Remessa</h:outputLink></li>
-                                    <li class="#{!usuarioController.temPermissao('listar_protocolo') ? 'disabled' : ''}"><h:outputLink value="lista_protocolo.xhtml">Protocolo de Documentos</h:outputLink></li>
-                                    <li class="#{!usuarioController.temPermissao('informacao') ? 'disabled' : ''}"><h:outputLink value="informacao.xhtml">Informação</h:outputLink></li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    #{usuarioController.pessoa.nome}
-                                    <h:graphicImage value="#{usuarioController.pessoa.caminhoFoto}" alt="FOTO DA PESSOA" style="width: 20px; margin-left: 10px"/>
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="disabled"><a href="#">Perfil</a></li>
-                                    <li class="disabled"><h:outputLink value="configuracoes.xhtml">Configurações</h:outputLink></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li>
-                                        <h:commandLink value="Sair" action="#{usuarioController.sair()}" />
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </h:form>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
+            </nav>
+        </h:form>
+        
+        <br />
 
         <!-- Modal -->
         <div class="modal fade" id="modal_loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

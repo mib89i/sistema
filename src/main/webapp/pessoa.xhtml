@@ -1,0 +1,330 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Pessoa</title>
+    </h:head>
+
+    <f:subview id="header">
+        <ui:include src="templates/header.xhtml"/>
+    </f:subview>
+
+    <h:body>
+        <div class="container">
+            <h:form>
+                <h:outputScript>load_masks();</h:outputScript>
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="painel_de_controle.xhtml">Início</a></li>
+                                <li class="breadcrumb-item"><a href="lista_pessoa.xhtml">Lista Pessoa</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Pessoa</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </h:form>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>CADASTRO DE PESSOA</h3>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h:messages id="message_pessoa" showDetail="true" class="alert #{mensagemFlash.ALERT}">
+                        <f:passThroughAttribute name="role" value="alert" />
+                    </h:messages>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <h:form id="form_pessoa_lista_opcoes">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <h:outputLink class="nav-link" value="lista_pessoa.xhtml">LISTAR PESSOAS</h:outputLink>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li class="nav-item">
+                                <h:outputLink class="nav-link" value="pessoa.xhtml">NOVO CADASTRO</h:outputLink>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+
+                <div class="col-sm-9">
+
+                    <h:form id="form_pessoa" enctype="multipart/form-data">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="input_nome">Nome</label>
+                                            <h:inputText id="input_nome" value="#{pessoaController.pessoa.nome}" styleClass="form-control">
+                                                <f:ajax event="change" render="@this" />
+                                                <f:passThroughAttribute name="placeholder" value="NOME" />
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="input_sobrenome">Sobre Nome</label>
+                                            <h:inputText id="input_sobrenome" value="#{pessoaController.pessoa.sobreNome}" styleClass="form-control">
+                                                <f:ajax event="change" render="@this" />
+                                                <f:passThroughAttribute name="placeholder" value="SOBRE NOME" />
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="input_documento">CPF</label>
+                                            <h:inputText id="input_documento" value="#{pessoaController.pessoa.documento}" styleClass="form-control mask_cpf">
+                                                <f:ajax event="blur" render="@this" />
+                                                <f:passThroughAttribute name="placeholder" value="CPF" />
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="input_grupo">Setor</label>
+                                            <h:selectOneMenu value="#{pessoaController.indexListaGrupo}" styleClass="form-control">
+                                                <f:ajax event="change" render="@this" />
+                                                <f:selectItems value="#{pessoaController.listaGrupo}" />
+                                            </h:selectOneMenu> 
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="input_cargo">Cargo</label>
+                                            <h:selectOneMenu value="#{pessoaController.indexListaCargo}" styleClass="form-control">
+                                                <f:ajax event="change" render="@this" />
+                                                <f:selectItems value="#{pessoaController.listaCargo}" />
+                                            </h:selectOneMenu> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </h:form>
+
+                    <br />
+
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <b>USUÁRIO DO SISTEMA</b>
+                        </div>
+                    </div>
+
+                    <h:form id="form_pessoa_usuario">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel" style="background-color: #f2f2f2; padding: 10px">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="input_nome">Usuário</label>
+                                                <h:inputText id="input_usuario" value="#{pessoaController.pessoa.usuario.usuario}" styleClass="form-control" disabled="#{pessoaController.pessoa.id ne -1}">
+                                                    <f:ajax event="change" render="@this" />
+                                                    <f:passThroughAttribute name="placeholder" value="NOME DE USUÁRIO" />
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="input_senha">Senha</label>
+                                                <h:inputSecret id="input_senha" value="#{pessoaController.pessoa.usuario.senha}" styleClass="form-control" disabled="#{pessoaController.pessoa.id ne -1}" redisplay="true">
+                                                    <f:ajax event="change" render="@this" />
+                                                    <f:passThroughAttribute name="placeholder" value="DIGITE A SENHA" />
+                                                </h:inputSecret>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="input_senha">Confirme a Senha</label>
+                                                <h:inputSecret id="input_confirme_senha" value="#{pessoaController.confirmeSenha}" styleClass="form-control" disabled="#{pessoaController.pessoa.id ne -1}" redisplay="true">
+                                                    <f:ajax event="change" render="@this" />
+                                                    <f:passThroughAttribute name="placeholder" value="CONFIRME A SENHA" />
+                                                </h:inputSecret>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h:commandButton styleClass="btn btn-info btn-xs" value="Editar Usuário" type="button" style="float: right" disabled="#{pessoaController.pessoa.id eq -1 or usuarioController.temPermissao('editar_usuario') eq false}">
+                                                <f:ajax event="click" render="form_pessoa:panel_editar_usuario form_pessoa:message_pessoa" />
+                                                <f:passThroughAttribute name="data-toggle" value="modal"/>
+                                                <f:passThroughAttribute name="data-target" value="#modal_editar_usuario"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal fade" id="modal_editar_usuario" tabindex="-1" role="dialog" aria-labelledby="myModalEditarUsuarioLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">EDITAR USUÁRIO</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="panel" style="background-color: #f2f2f2; padding: 10px">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="input_nome">Usuário</label>
+                                                                <h:inputText id="input_editar_usuario" value="#{pessoaController.pessoa.usuario.usuario}" styleClass="form-control">
+                                                                    <f:ajax event="change" render="@this" />
+                                                                    <f:passThroughAttribute name="placeholder" value="NOME DE USUÁRIO" />
+                                                                </h:inputText>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="input_senha">Senha</label>
+                                                                <h:inputSecret id="input_editar_senha" value="#{pessoaController.pessoa.usuario.senha}" styleClass="form-control" redisplay="true">
+                                                                    <f:ajax event="change" render="@this" />
+                                                                    <f:passThroughAttribute name="placeholder" value="DIGITE A SENHA" />
+                                                                </h:inputSecret>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group">
+                                                                <label for="input_senha">Confirme a Senha</label>
+                                                                <h:inputSecret id="input_editar_confirme_senha" value="#{pessoaController.confirmeSenha}" styleClass="form-control" redisplay="true">
+                                                                    <f:ajax event="change" render="@this" />
+                                                                    <f:passThroughAttribute name="placeholder" value="CONFIRME A SENHA" />
+                                                                </h:inputSecret>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+                                        <h:commandButton styleClass="btn btn-primary" value="SALVAR" action="#{pessoaController.salvarEditarUsuario()}">
+                                            <f:ajax event="action" render="@form message_pessoa" />
+                                            <f:passThroughAttribute name="data-dismiss" value="modal" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </h:form>
+
+                    <h:form id="form_pessoa_salvar">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <hr />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12">
+                                <h:commandButton styleClass="btn btn-default btn-block" value="#{(pessoaController.pessoa.id eq -1) ? 'SALVAR CADASTRO' : 'ALTERAR CADASTRO'}" type="button" disabled="#{(pessoaController.pessoa.id eq -1 and usuarioController.temPermissao('salvar_pessoa') ne true) or (pessoaController.pessoa.id ne -1 and usuarioController.temPermissao('alterar_pessoa') ne true)}">
+                                    <f:passThroughAttribute name="data-toggle" value="modal"/>
+                                    <f:passThroughAttribute name="data-target" value="#modal_salvar"/>
+                                </h:commandButton>
+                            </div>
+
+                            <div class="col-sm-3 col-xs-12">
+                                <h:commandButton styleClass="btn btn-primary btn-block" value="EXCLUIR CADASTRO" type="button" disabled="#{pessoaController.pessoa.id eq -1 or usuarioController.temPermissao('excluir_pessoa') eq false}">
+                                    <f:passThroughAttribute name="data-toggle" value="modal"/>
+                                    <f:passThroughAttribute name="data-target" value="#modal_excluir"/>
+                                </h:commandButton>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal_salvar" tabindex="-1" role="dialog" aria-labelledby="myModalSalvarLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">SALVAR PESSOA</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>DESEJA REALMENTE SALVAR ESTE CADASTRO?</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
+                                        <h:commandButton styleClass="btn btn-primary" value="SIM" action="#{pessoaController.salvar()}">
+                                            <f:ajax event="action" render="form_pessoa_lista_opcoes form_pessoa form_pessoa_usuario message_pessoa"/>
+                                            <f:passThroughAttribute name="data-dismiss" value="modal" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal_excluir" tabindex="-1" role="dialog" aria-labelledby="myModalExcluirLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">EXCLUIR PESSOA</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 style="color: red">DESEJA REALMENTE EXCLUIR ESTE CADASTRO?</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
+                                        <h:commandButton styleClass="btn btn-primary" value="SIM" action="#{pessoaController.excluir()}">
+                                            <f:ajax event="action" render="form_pessoa_lista_opcoes form_pessoa form_pessoa_usuario message_pessoa"/>
+                                            <f:passThroughAttribute name="data-dismiss" value="modal" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </h:form>
+                </div>
+            </div>
+        </div><!-- /container -->
+    </h:body>
+
+    <f:subview id="footer">
+        <ui:include src="templates/footer.xhtml"/>
+    </f:subview>
+</html>
+
