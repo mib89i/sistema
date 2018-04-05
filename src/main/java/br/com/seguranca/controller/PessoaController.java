@@ -70,7 +70,7 @@ public class PessoaController implements Serializable {
                 pessoa = (Pessoa) new Dao().find(new Pessoa(), pessoa_id);
 
                 if (pessoa == null){
-                    MensagemFlash.fatal("", "PESSOA NÃO ENCONTRADA!");
+                    //MensagemFlash.fatal("", "PESSOA NÃO ENCONTRADA!");
                     FacesContext.getCurrentInstance().getExternalContext().redirect("lista_pessoa.xhtml");
                     return;
                 }
@@ -134,17 +134,17 @@ public class PessoaController implements Serializable {
         // USUÁRIO NÃO É OBRIGATÓRIO
         if (!pessoa.getUsuario().getUsuario().isEmpty() || !pessoa.getUsuario().getSenha().isEmpty() || !confirmeSenha.isEmpty()) {
             if (pessoa.getUsuario().getUsuario().isEmpty()) {
-                MensagemFlash.fatal("", "DIGITE UM USUÁRIO PARA ESTA PESSOA!");
+                //MensagemFlash.fatal("", "DIGITE UM USUÁRIO PARA ESTA PESSOA!");
                 return false;
             }
 
             if (pessoa.getUsuario().getSenha().isEmpty()) {
-                MensagemFlash.fatal("", "DIGITE UMA SENHA DE USUÁRIO PARA ESTA PESSOA!");
+                //MensagemFlash.fatal("", "DIGITE UMA SENHA DE USUÁRIO PARA ESTA PESSOA!");
                 return false;
             }
 
             if (!pessoa.getUsuario().getSenha().equals(confirmeSenha)) {
-                MensagemFlash.fatal("", "SENHAS NÃO CORRESPONDEM!");
+                //MensagemFlash.fatal("", "SENHAS NÃO CORRESPONDEM!");
                 return false;
             }
 
@@ -153,13 +153,13 @@ public class PessoaController implements Serializable {
             if (pessoa.getId() == -1) {
                 Usuario u = u_dao.pesquisaUsuarioLoginExiste(null, pessoa.getUsuario().getUsuario());
                 if (u != null) {
-                    MensagemFlash.fatal("", "NOME DE USUÁRIO JÁ EXISTE, ESCOLHA OUTRO!");
+                    //MensagemFlash.fatal("", "NOME DE USUÁRIO JÁ EXISTE, ESCOLHA OUTRO!");
                     return false;
                 }
             } else {
                 Usuario u = u_dao.pesquisaUsuarioLoginExiste(pessoa.getUsuario().getId(), pessoa.getUsuario().getUsuario());
                 if (u != null) {
-                    MensagemFlash.fatal("", "NOME DE USUÁRIO JÁ EXISTE, ESCOLHA OUTRO!");
+                    //MensagemFlash.fatal("", "NOME DE USUÁRIO JÁ EXISTE, ESCOLHA OUTRO!");
                     return false;
                 }
             }
@@ -177,11 +177,11 @@ public class PessoaController implements Serializable {
 
         if (!dao.update(pessoa.getUsuario())) {
             dao.rollback();
-            MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR USUÁRIO, TENTE NOVAMENTE!");
+            //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR USUÁRIO, TENTE NOVAMENTE!");
             return;
         }
 
-        MensagemFlash.info("", "USUÁRIO ATUALIZADO COM SUCESSO!");
+        //MensagemFlash.info("", "USUÁRIO ATUALIZADO COM SUCESSO!");
         dao.commit();
 
         // ALTERA A PESSOA SE A MESMA ESTIVER LOGADA NO SISTEMA
@@ -192,7 +192,7 @@ public class PessoaController implements Serializable {
 
     public Boolean validaSalvar() {
         if (pessoa.getNome().isEmpty()) {
-            MensagemFlash.fatal("", "DIGITE UM NOME PARA PESSOA!");
+            //MensagemFlash.fatal("", "DIGITE UM NOME PARA PESSOA!");
             return false;
         }
 
@@ -215,31 +215,31 @@ public class PessoaController implements Serializable {
 
             if (!dao.save(pessoa.getUsuario())) {
                 dao.rollback();
-                MensagemFlash.fatal("", "NÃO FOI POSSÍVEL SALVAR USUÁRIO, TENTE NOVAMENTE!");
+                //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL SALVAR USUÁRIO, TENTE NOVAMENTE!");
                 return;
             }
 
             if (!dao.save(pessoa)) {
                 dao.rollback();
-                MensagemFlash.fatal("", "NÃO FOI POSSÍVEL SALVAR PESSOA, TENTE NOVAMENTE!");
+                //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL SALVAR PESSOA, TENTE NOVAMENTE!");
                 return;
             }
 
-            MensagemFlash.info("", "PESSOA SALVA COM SUCESSO!");
+            //MensagemFlash.info("", "PESSOA SALVA COM SUCESSO!");
         } else {
             if (!dao.update(pessoa.getUsuario())) {
                 dao.rollback();
-                MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR USUÁRIO, TENTE NOVAMENTE!");
+                //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR USUÁRIO, TENTE NOVAMENTE!");
                 return;
             }
 
             if (!dao.update(pessoa)) {
                 dao.rollback();
-                MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR PESSOA, TENTE NOVAMENTE!");
+                //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR PESSOA, TENTE NOVAMENTE!");
                 return;
             }
 
-            MensagemFlash.info("", "PESSOA ATUALIZADA COM SUCESSO!");
+            //MensagemFlash.info("", "PESSOA ATUALIZADA COM SUCESSO!");
         }
 
         dao.commit();
@@ -252,7 +252,7 @@ public class PessoaController implements Serializable {
 
     public void excluir() {
         if (pessoa.getId() == ((Pessoa) Sessao.get("sessao_pessoa_usuario")).getId()) {
-            MensagemFlash.fatal("", "VOCÊ NÃO PODE EXCLUIR SEU PRÓPRIO USUÁRIO!");
+            //MensagemFlash.fatal("", "VOCÊ NÃO PODE EXCLUIR SEU PRÓPRIO USUÁRIO!");
             return;
         }
 
@@ -261,19 +261,19 @@ public class PessoaController implements Serializable {
 
         if (!dao.remove(dao.find(pessoa))) {
             dao.rollback();
-            MensagemFlash.fatal("", "NÃO FOI POSSÍVEL EXCLUIR ESTA PESSOA, TENTE NOVAMENTE!");
+            //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL EXCLUIR ESTA PESSOA, TENTE NOVAMENTE!");
             return;
         }
 
         if (!dao.remove(dao.find(pessoa.getUsuario()))) {
             dao.rollback();
-            MensagemFlash.fatal("", "NÃO FOI POSSÍVEL EXCLUIR ESTE USUÁRIO, TENTE NOVAMENTE!");
+            //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL EXCLUIR ESTE USUÁRIO, TENTE NOVAMENTE!");
             return;
         }
 
         dao.commit();
 
-        MensagemFlash.info("", "PESSOA EXCLUÍDA COM SUCESSO!");
+        //MensagemFlash.info("", "PESSOA EXCLUÍDA COM SUCESSO!");
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("lista_pessoa.xhtml");
         } catch (Exception e) {

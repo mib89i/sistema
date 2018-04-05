@@ -31,6 +31,18 @@ public class UsuarioController implements Serializable {
     private String sessaoMessageLogin = "";
     private Pessoa pessoa = new Pessoa();
 
+    public UsuarioController() {
+
+//        try {
+//            if (!FacesContext.getCurrentInstance().isPostback()) {
+//                Sessao.remove("sessao_mensagem_tela");
+//            }
+//        } catch (Exception e) {
+//            e.getMessage();
+//        }
+//        
+    }
+
     public String entrar() {
         UsuarioDao dao = new UsuarioDao();
 
@@ -41,7 +53,7 @@ public class UsuarioController implements Serializable {
             pessoa = dao.pesquisaPessoaUsuario(u.getId());
 
             if (pessoa == null) {
-                MensagemFlash.fatal("", "USUÁRIO SEM PESSOA CADASTRADA!");
+                new MensagemFlash().danger("Atenção", "USUÁRIO SEM PESSOA CADASTRADA!");
                 return null;
             }
 
@@ -57,7 +69,7 @@ public class UsuarioController implements Serializable {
                 return "painel_de_controle";
             }
         } else {
-            MensagemFlash.fatal("", "USUÁRIO E/OU SENHA INVÁLIDOS");
+            new MensagemFlash().danger("Atenção", "USUÁRIO E/OU SENHA INVÁLIDOS");
             return null;
         }
     }
@@ -70,7 +82,6 @@ public class UsuarioController implements Serializable {
         session.invalidate();
         return "index";
     }
-
 
     public void validacao() throws IOException {
         HttpServletRequest pagina_requerida = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -88,12 +99,12 @@ public class UsuarioController implements Serializable {
     }
 
     public void valida_permissao_tela(String pagina) throws IOException {
-        
+
         // VERIFICAR PÁGINAS E PERMISSÕES DEPOIS
-        if (1 == 1){
+        if (1 == 1) {
             return;
         }
-        
+
         switch (pagina) {
             case "painel_de_controle.xhtml":
                 return;
@@ -180,7 +191,7 @@ public class UsuarioController implements Serializable {
     public Usuario getUsuarioSessao() {
         return ((Pessoa) Sessao.get("sessao_pessoa_usuario")).getUsuario();
     }
-    
+
     public static Usuario usuarioSessao() {
         return ((Pessoa) Sessao.get("sessao_pessoa_usuario")).getUsuario();
     }

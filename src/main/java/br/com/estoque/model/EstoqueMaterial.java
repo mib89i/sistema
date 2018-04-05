@@ -5,7 +5,7 @@
  */
 package br.com.estoque.model;
 
-import br.com.seguranca.model.Grupo;
+import br.com.seguranca.model.Fornecedor;
 import br.com.utilitarios.Datas;
 import java.io.Serializable;
 import java.util.Date;
@@ -25,38 +25,43 @@ import javax.persistence.TemporalType;
  * @author claudemir
  */
 @Entity
-@Table(name = "produto_fornecedor_quantidade")
-public class ProdutoFornecedorQuantidade implements Serializable {
+@Table(name = "estoque_material")
+public class EstoqueMaterial implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "id_produto_fornecedor", referencedColumnName = "id")
+    @JoinColumn(name = "id_material", referencedColumnName = "id")
     @ManyToOne
-    private ProdutoFornecedor produtoFornecedor;
+    private Material material;
+    @JoinColumn(name = "id_fornecedor", referencedColumnName = "id")
+    @ManyToOne
+    private Fornecedor fornecedor;
     @Column(name = "quantidade")
     private Integer quantidade;
     @Column(name = "es")
     private String es;
     @Temporal(TemporalType.DATE)
-    @Column(name = "data")
+    @Column(name = "data_estoque")
     private Date data;
-    @Column(name = "hora", length = 8)
+    @Column(name = "hora_estoque", length = 8)
     private String hora;
 
-    public ProdutoFornecedorQuantidade() {
+    public EstoqueMaterial() {
         this.id = null;
-        this.produtoFornecedor = new ProdutoFornecedor();
-        this.quantidade = null;
+        this.material = new Material();
+        this.fornecedor = new Fornecedor();
+        this.quantidade = 0;
         this.es = "";
         this.data = Datas.dataHoje();
         this.hora = "";
     }
 
-    public ProdutoFornecedorQuantidade(Integer id, ProdutoFornecedor produtoFornecedor, Integer quantidade, String es, Date data, String hora) {
+    public EstoqueMaterial(Integer id, Material material, Fornecedor fornecedor, Integer quantidade, String es, Date data, String hora) {
         this.id = id;
-        this.produtoFornecedor = produtoFornecedor;
+        this.material = material;
+        this.fornecedor = fornecedor;
         this.quantidade = quantidade;
         this.es = es;
         this.data = data;
@@ -71,12 +76,20 @@ public class ProdutoFornecedorQuantidade implements Serializable {
         this.id = id;
     }
 
-    public ProdutoFornecedor getProdutoFornecedor() {
-        return produtoFornecedor;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setProdutoFornecedor(ProdutoFornecedor produtoFornecedor) {
-        this.produtoFornecedor = produtoFornecedor;
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     public Integer getQuantidade() {
@@ -101,14 +114,6 @@ public class ProdutoFornecedorQuantidade implements Serializable {
 
     public void setData(Date data) {
         this.data = data;
-    }
-
-    public String getDataString() {
-        return Datas.converteData(data);
-    }
-
-    public void setDataString(String dataString) {
-        this.data = Datas.converte(dataString);
     }
 
     public String getHora() {

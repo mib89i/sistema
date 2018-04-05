@@ -1,38 +1,59 @@
 package br.com.utilitarios;
 
 import java.io.Serializable;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 @ManagedBean
 @ViewScoped
 public class MensagemFlash implements Serializable {
 
-    private static String ALERT = "";
+    public MensagemFlash() {
 
-    public static void error(String title, String description) {
-        ALERT = "alert-danger";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, title, description));
     }
 
-    public static void fatal(String title, String description) {
-        ALERT = "alert-danger";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, title, description));
+    public void primary(String titulo, String mensagem) {
+        Sessao.put("sessao_mensagem_tela", new MensagemTela("alert-primary", titulo, mensagem));
     }
 
-    public static void info(String title, String description) {
-        ALERT = "alert-info";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, title, description));
+    public void secondary(String titulo, String mensagem) {
+        Sessao.put("sessao_mensagem_tela", new MensagemTela("alert-secondary", titulo, mensagem));
     }
 
-    public static void warn(String title, String description) {
-        ALERT = "alert-warning";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, title, description));
+    public void success(String titulo, String mensagem) {
+        Sessao.put("sessao_mensagem_tela", new MensagemTela("alert-success", titulo, mensagem));
     }
 
-    public String getALERT() {
-        return ALERT;
+    public void danger(String titulo, String mensagem) {
+        Sessao.put("sessao_mensagem_tela", new MensagemTela("alert-danger", titulo, mensagem));
     }
+
+    public void warning(String titulo, String mensagem) {
+        Sessao.put("sessao_mensagem_tela", new MensagemTela("alert-warning", titulo, mensagem));
+    }
+
+    public void info(String titulo, String mensagem) {
+        Sessao.put("sessao_mensagem_tela", new MensagemTela("alert-info", titulo, mensagem));
+    }
+
+    public void light(String titulo, String mensagem) {
+        Sessao.put("sessao_mensagem_tela", new MensagemTela("alert-light", titulo, mensagem));
+    }
+
+    public void dark(String titulo, String mensagem) {
+        Sessao.put("sessao_mensagem_tela", new MensagemTela("alert-dark", titulo, mensagem));
+    }
+
+    public MensagemTela getMt() {
+        if (Sessao.exist("sessao_mensagem_tela")) {
+            return (MensagemTela) Sessao.get("sessao_mensagem_tela");
+        } else {
+            return new MensagemTela();
+        }
+    }
+
+    public void remove() {
+        Sessao.remove("sessao_mensagem_tela");
+    }
+
 }

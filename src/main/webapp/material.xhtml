@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Material</title>
+    </h:head>
+
+    <f:subview id="header">
+        <ui:include src="templates/header.xhtml"/>
+    </f:subview>
+
+    <h:body>
+        <div class="container">
+            <h:form>
+                <h:outputScript>load_masks();</h:outputScript>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="painel_de_controle.xhtml">Início</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Cadastro de Material</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </h:form>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>CADASTRO DE MATERIAL</h3>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h:messages id="message_id" showDetail="true" class="alert #{mensagemFlash.ALERT}">
+                        <f:passThroughAttribute name="role" value="alert" />
+                    </h:messages>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <h:form id="form_material_lista_opcoes">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <h:outputLink class="nav-link" value="material.xhtml">NOVO CADASTRO</h:outputLink>
+                                <h:outputLink class="nav-link" value="lista_material.xhtml">LISTA DE MATERIAL</h:outputLink>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+
+                <div class="col-sm-9">
+
+                    <h:form id="form_material">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Nome</label>
+                                    <h:inputText value="#{materialController.material.nome}" styleClass="form-control">
+                                        <f:ajax event="change" render="@this" />
+                                        <f:passThroughAttribute name="placeholder" value="NOME" />
+                                    </h:inputText>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Medida</label>
+                                    <h:selectOneMenu value="#{materialController.indexListaMedida}" styleClass="form-control">
+                                        <f:ajax event="change" render="@this" />
+                                        <f:selectItems value="#{materialController.listaMedida}" />
+                                    </h:selectOneMenu> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-12">
+                                <h:commandButton styleClass="btn btn-primary btn-block" value="#{(materialController.material.id eq null) ? 'SALVAR' : 'ALTERAR'}" type="button">
+                                    <f:passThroughAttribute name="data-toggle" value="modal"/>
+                                    <f:passThroughAttribute name="data-target" value="#modal_salvar"/>
+                                </h:commandButton>
+                            </div>
+                            
+                            <div class="col-sm-3 col-xs-12">
+                                <h:commandButton styleClass="btn btn-danger btn-block" value="EXCLUIR" disabled="#{materialController.material.id eq null}" type="button">
+                                    <f:passThroughAttribute name="data-toggle" value="modal"/>
+                                    <f:passThroughAttribute name="data-target" value="#modal_excluir"/>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal_salvar" tabindex="-1" role="dialog" aria-labelledby="myModalSalvarLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">SALVAR MATERIAL</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>DESEJA REALMENTE SALVAR ESTE REGISTRO?</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
+                                        <h:commandButton styleClass="btn btn-primary" value="SALVAR" action="#{materialController.salvar()}">
+                                            <f:ajax event="action" render="form_material header:form_header"/>
+                                            <f:passThroughAttribute name="data-dismiss" value="modal" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal_excluir" tabindex="-1" role="dialog" aria-labelledby="myModalExcluirLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">EXCLUIR MATERIAL</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>DESEJA REALMENTE EXCLUIR ESTE REGISTRO?</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
+                                        <h:commandButton styleClass="btn btn-primary" value="EXCLUIR" action="#{materialController.excluir()}">
+                                            <f:ajax event="action" render="form_material header:form_header"/>
+                                            <f:passThroughAttribute name="data-dismiss" value="modal" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+
+            </div>
+
+        </div><!-- /container -->
+    </h:body>
+
+    <f:subview id="footer">
+        <ui:include src="templates/footer.xhtml"/>
+    </f:subview>
+</html>
+

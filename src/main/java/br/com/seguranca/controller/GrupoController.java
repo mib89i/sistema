@@ -101,7 +101,7 @@ public class GrupoController implements Serializable {
         if (lpc.getCheck()) {
             if (pg != null) {
                 dao.rollback();
-                MensagemFlash.fatal("", "PERMISSÃO JÁ INSERIDA, TENTE NOVAMENTE!");
+//                MensagemFlash.fatal("", "PERMISSÃO JÁ INSERIDA, TENTE NOVAMENTE!");
                 return;
             }
             
@@ -109,25 +109,25 @@ public class GrupoController implements Serializable {
 
             if (!dao.save(pg)) {
                 dao.rollback();
-                MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR PERMISSÃO DO GRUPO, TENTE NOVAMENTE!");
+                //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR PERMISSÃO DO GRUPO, TENTE NOVAMENTE!");
                 return;
             }
         } else {
             if (pg == null) {
                 dao.rollback();
-                MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ENCONTRAR PERMISSÃO, TENTE NOVAMENTE!");
+                //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ENCONTRAR PERMISSÃO, TENTE NOVAMENTE!");
                 return;
             }
 
             if (!dao.remove(dao.find(pg))) {
                 dao.rollback();
-                MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR PERMISSÃO DO GRUPO, TENTE NOVAMENTE!");
+                //MensagemFlash.fatal("", "NÃO FOI POSSÍVEL ATUALIZAR PERMISSÃO DO GRUPO, TENTE NOVAMENTE!");
                 return;
             }
         }
 
         dao.commit();
-        MensagemFlash.info("", "PERMISSÃO ALTERADA!");
+        //MensagemFlash.info("", "PERMISSÃO ALTERADA!");
     }
 
     public Grupo getGrupo() {

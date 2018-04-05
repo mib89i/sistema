@@ -6,8 +6,6 @@
 package br.com.seguranca.dao;
 
 import br.com.conexao.Conexao;
-import br.com.estoque.model.ProdutoFornecedor;
-import br.com.estoque.model.ProdutoFornecedorQuantidade;
 import br.com.seguranca.model.Fornecedor;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,29 +29,29 @@ public class FornecedorDao extends Conexao {
         return new ArrayList();
     }
     
-    public List<ProdutoFornecedor> listaProdutoFornecedor(){
-        try {
-            Query qry = getEntityManager().createNativeQuery(
-                    "SELECT pf.* FROM produto_fornecedor pf ORDER BY pf.nome", ProdutoFornecedor.class
-            );
-
-            return qry.getResultList();
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return new ArrayList();
-    }
-    
-    public List<ProdutoFornecedorQuantidade> listaProdutoFQ(){
-        try {
-            Query qry = getEntityManager().createNativeQuery(
-                    "SELECT pfq.* FROM produto_fornecedor_quantidade pfq ORDER BY pfq.id", ProdutoFornecedorQuantidade.class
-            );
-
-            return qry.getResultList();
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return new ArrayList();
-    }
+//    public List<ProdutoFornecedor> listaProdutoFornecedor(){
+//        try {
+//            Query qry = getEntityManager().createNativeQuery(
+//                    "SELECT pf.* FROM produto_fornecedor pf ORDER BY pf.nome", ProdutoFornecedor.class
+//            );
+//
+//            return qry.getResultList();
+//        } catch (Exception e) {
+//            e.getMessage();
+//        }
+//        return new ArrayList();
+//    }
+//    
+//    public List<ProdutoFornecedorQuantidade> listaProdutoFQ(){
+//        try {
+//            Query qry = getEntityManager().createNativeQuery(
+//                    "SELECT pfq.* FROM produto_fornecedor_quantidade pfq ORDER BY pfq.id DESC", ProdutoFornecedorQuantidade.class
+//            );
+//
+//            return qry.getResultList();
+//        } catch (Exception e) {
+//            e.getMessage();
+//        }
+//        return new ArrayList();
+//    }
 }

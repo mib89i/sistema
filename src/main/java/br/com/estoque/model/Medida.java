@@ -11,8 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -20,8 +18,8 @@ import javax.persistence.Table;
  * @author claudemir
  */
 @Entity
-@Table(name = "produto")
-public class Produto implements Serializable {
+@Table(name = "medida")
+public class Medida implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,20 +27,19 @@ public class Produto implements Serializable {
     private Integer id;
     @Column(name = "nome", length = 200)
     private String nome;
-    @JoinColumn(name = "id_medida", referencedColumnName = "id")
-    @ManyToOne
-    private Medida medida;
+    @Column(name = "sigla", length = 5)
+    private String sigla;
 
-    public Produto() {
+    public Medida() {
         this.id = null;
         this.nome = "";
-        this.medida = new Medida();
+        this.sigla = "";
     }
 
-    public Produto(Integer id, String nome, Medida medida) {
+    public Medida(Integer id, String nome, String sigla) {
         this.id = id;
         this.nome = nome;
-        this.medida = medida;
+        this.sigla = sigla;
     }
 
     public Integer getId() {
@@ -61,12 +58,12 @@ public class Produto implements Serializable {
         this.nome = nome;
     }
 
-    public Medida getMedida() {
-        return medida;
+    public String getSigla() {
+        return sigla;
     }
 
-    public void setMedida(Medida medida) {
-        this.medida = medida;
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
 }

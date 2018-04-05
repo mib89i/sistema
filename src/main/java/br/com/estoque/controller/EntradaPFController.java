@@ -6,8 +6,6 @@
 package br.com.estoque.controller;
 
 import br.com.conexao.Dao;
-import br.com.estoque.model.ProdutoFornecedor;
-import br.com.estoque.model.ProdutoFornecedorQuantidade;
 import br.com.seguranca.dao.FornecedorDao;
 import br.com.seguranca.model.Fornecedor;
 import br.com.utilitarios.Datas;
@@ -29,78 +27,66 @@ import javax.faces.model.SelectItem;
 @ViewScoped
 public class EntradaPFController implements Serializable {
 
-    public ProdutoFornecedorQuantidade getProdutoFQSelecionado() {
-        return produtoFQSelecionado;
-    }
-
-    public void setProdutoFQSelecionado(ProdutoFornecedorQuantidade produtoFQSelecionado) {
-        this.produtoFQSelecionado = produtoFQSelecionado;
-    }
     private Integer indexListaFornecedor = 0;
     private List<SelectItem> listaFornecedor = new ArrayList();
     
     private Integer indexListaPF = 0;
     private List<SelectItem> listaPF = new ArrayList();
     
-    private ProdutoFornecedorQuantidade produtoFQ = new ProdutoFornecedorQuantidade();
-    private List<ProdutoFornecedorQuantidade> listaProdutoFQ = new ArrayList();
-    
-    private ProdutoFornecedorQuantidade produtoFQSelecionado = new ProdutoFornecedorQuantidade();
-
     public EntradaPFController(){
         loadListaFornecedor();
-        loadListaPF();
-        loadListaProdutoFQ();
+//        loadListaPF();
+//        loadListaProdutoFQ();
     }
     
     public void salvar(){
-        if (produtoFQ.getQuantidade() == null || produtoFQ.getQuantidade() < 1){
-            MensagemFlash.fatal("", "DIGITE UMA QUANTIDADE PARA O PRODUTO!");
-            return;
-        }
+//        if (produtoFQ.getQuantidade() == null || produtoFQ.getQuantidade() < 1){
+//            MensagemFlash.fatal("", "DIGITE UMA QUANTIDADE PARA O PRODUTO!");
+//            return;
+//        }
         
         Dao dao = new Dao();
-        
-        produtoFQ.setHora(Datas.horaMinuto());
-        produtoFQ.setEs("E");
-        produtoFQ.setProdutoFornecedor((ProdutoFornecedor) dao.find(new ProdutoFornecedor(), Integer.valueOf(listaPF.get(indexListaPF).getDescription())));
+//        
+//        produtoFQ.setHora(Datas.horaMinuto());
+//        produtoFQ.setEs("E");
+//        produtoFQ.setProdutoFornecedor((ProdutoFornecedor) dao.find(new ProdutoFornecedor(), Integer.valueOf(listaPF.get(indexListaPF).getDescription())));
                 
         dao.begin();
 
-        if (!dao.update(produtoFQ)) {
-            dao.rollback();
-            MensagemFlash.fatal("", "NÃO FOI POSSÍVEL SALVAR ENTRADA!");
-            return;
-        }
+//        if (!dao.update(produtoFQ)) {
+//            dao.rollback();
+//            MensagemFlash.fatal("", "NÃO FOI POSSÍVEL SALVAR ENTRADA!");
+//            return;
+//        }
 
-        MensagemFlash.info("", "ENTRADA CADASTRADA COM SUCESSO!");
+//        MensagemFlash.info("", "ENTRADA CADASTRADA COM SUCESSO!");
         
         dao.commit();
         
-        produtoFQ = new ProdutoFornecedorQuantidade();
-        loadListaProdutoFQ();
+//        produtoFQ = new ProdutoFornecedorQuantidade();
+//        loadListaProdutoFQ();
     }
     
-    public void selecionarPFQ(ProdutoFornecedorQuantidade pfq){
-        produtoFQSelecionado = pfq;
-    }
-    
+//    public void selecionarPFQ(ProdutoFornecedorQuantidade pfq){
+//        produtoFQSelecionado = pfq;
+//    }
+//    
     public void excluir(){
         Dao dao = new Dao();
         
         dao.begin();
-        
-        if (!dao.remove(produtoFQSelecionado)){
-            MensagemFlash.fatal("", "ERRO AO EXCLUIR REGISTRO!");
-            dao.rollback();
-            return;
-        }
-        
-        MensagemFlash.info("", "ENTRADA EXCLUÍDA COM SUCESSO!");
-        dao.commit();
-        
-        produtoFQSelecionado = new ProdutoFornecedorQuantidade();
-        loadListaProdutoFQ();
+//        
+//        if (!dao.remove(produtoFQSelecionado)){
+//            MensagemFlash.fatal("", "ERRO AO EXCLUIR REGISTRO!");
+//            dao.rollback();
+//            return;
+//        }
+//        
+//        MensagemFlash.info("", "ENTRADA EXCLUÍDA COM SUCESSO!");
+//        dao.commit();
+//        
+//        produtoFQSelecionado = new ProdutoFornecedorQuantidade();
+//        loadListaProdutoFQ();
     }
     
     public final void loadListaFornecedor(){
@@ -113,22 +99,22 @@ public class EntradaPFController implements Serializable {
         }
     }
     
-    public final void loadListaPF(){
-        listaPF.clear();
-        
-        List<ProdutoFornecedor> result = new FornecedorDao().listaProdutoFornecedor();
-        
-        for (int i = 0; i < result.size(); i++){
-            listaPF.add(new SelectItem(i, result.get(i).getNome(), Integer.toString(result.get(i).getId())));
-        }
-    }
-    
-    public final void loadListaProdutoFQ(){
-        listaProdutoFQ.clear();
-        
-        listaProdutoFQ = new FornecedorDao().listaProdutoFQ();
-        
-    }
+//    public final void loadListaPF(){
+//        listaPF.clear();
+//        
+//        List<ProdutoFornecedor> result = new FornecedorDao().listaProdutoFornecedor();
+//        
+//        for (int i = 0; i < result.size(); i++){
+//            listaPF.add(new SelectItem(i, result.get(i).getNome(), Integer.toString(result.get(i).getId())));
+//        }
+//    }
+//    
+//    public final void loadListaProdutoFQ(){
+//        listaProdutoFQ.clear();
+//        
+//        listaProdutoFQ = new FornecedorDao().listaProdutoFQ();
+//        
+//    }
     
     public List<SelectItem> getListaFornecedor() {
         return listaFornecedor;
@@ -162,19 +148,4 @@ public class EntradaPFController implements Serializable {
         this.listaPF = listaPF;
     }
 
-    public ProdutoFornecedorQuantidade getProdutoFQ() {
-        return produtoFQ;
-    }
-
-    public void setProdutoFQ(ProdutoFornecedorQuantidade produtoFQ) {
-        this.produtoFQ = produtoFQ;
-    }
-
-    public List<ProdutoFornecedorQuantidade> getListaProdutoFQ() {
-        return listaProdutoFQ;
-    }
-
-    public void setListaProdutoFQ(List<ProdutoFornecedorQuantidade> listaProdutoFQ) {
-        this.listaProdutoFQ = listaProdutoFQ;
-    }
 }

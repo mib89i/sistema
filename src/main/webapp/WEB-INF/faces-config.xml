@@ -36,8 +36,14 @@
         </navigation-case>    
         
         <navigation-case>
-            <from-outcome>entrada_pf</from-outcome>
-            <to-view-id>/entrada_pf.xhtml</to-view-id>
+            <from-outcome>material</from-outcome>
+            <to-view-id>/material.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>    
+        
+        <navigation-case>
+            <from-outcome>lista_material</from-outcome>
+            <to-view-id>/lista_material.xhtml</to-view-id>
             <redirect/>
         </navigation-case>    
     </navigation-rule>

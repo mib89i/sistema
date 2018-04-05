@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />		
@@ -38,7 +39,7 @@
     </f:metadata>
 
     <h:body>
-        <h:form>
+        <h:form id="form_header">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="#" style="font-weight: bold">RIBERGELO</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,6 +66,7 @@
                                 FORNECEDORES
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <h:outputLink value="#{!usuarioController.temPermissao('lista_material') ? '#' : 'lista_material.xhtml'}" class="dropdown-item #{!usuarioController.temPermissao('lista_material') ? 'disabled' : ''}">MATERIAIS</h:outputLink>
                                 <h:outputLink value="#{!usuarioController.temPermissao('lista_fornecedor') ? '#' : 'lista_fornecedor.xhtml'}" class="dropdown-item #{!usuarioController.temPermissao('lista_fornecedor') ? 'disabled' : ''}">LISTA DE FORNECEDORES</h:outputLink>
                                 <h:outputLink value="#{!usuarioController.temPermissao('entrada_pf') ? '#' : 'entrada_pf.xhtml'}" class="dropdown-item #{!usuarioController.temPermissao('entrada_pf') ? 'disabled' : ''}">ENTRADA DE PRODUTO</h:outputLink>
                             </div>
@@ -93,8 +95,48 @@
                     </ul>
                 </div>
             </nav>
+
+            <div class="container-fluid">
+                <h:panelGroup layout="block" class="row" rendered="false">
+                    <div class="col">
+                        <div class="alert #{mensagemFlash.mt.tipo} alert-dismissible fade show" role="alert">
+                            <strong>#{mensagemFlash.mt.titulo}</strong> #{mensagemFlash.mt.mensagem}
+                            <h:commandLink class="close" action="#{mensagemFlash.remove()}">
+                                <span aria-hidden="true">&times;</span>
+                                <f:passThroughAttribute name="data-dismiss" value="alert" />
+                                <f:passThroughAttribute name="aria-label" value="Close" />
+                            </h:commandLink>
+                        </div>
+                    </div>
+
+                </h:panelGroup>
+            </div>
+
+            <h:panelGroup layout="block" rendered="#{mensagemFlash.mt.tipo ne ''}">
+                <script type="text/javascript">
+                    $(window).on('load', function () {
+                        $('#modal_mensagem').modal('show');
+                    });
+                </script>
+            </h:panelGroup>
+
+            <div id="modal_mensagem" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content bg-primary">
+                        <div class="modal-body text-white">
+                            <strong>#{mensagemFlash.mt.titulo}</strong> 
+                            <br />
+                            #{mensagemFlash.mt.mensagem}
+                            <br />
+                            <h:commandButton action="#{mensagemFlash.remove()}">
+                                <f:passThroughAttribute name="data-dismiss" value="modal" />
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </h:form>
-        
+
         <br />
 
         <!-- Modal -->

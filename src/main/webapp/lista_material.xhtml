@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Lista de Materiais</title>
+    </h:head>
+
+    <f:subview id="header">
+        <ui:include src="templates/header.xhtml"/>
+    </f:subview>
+
+    <h:body>
+        <div class="container">
+            <h:form>
+                <h:outputScript>load_masks();</h:outputScript>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="painel_de_controle.xhtml">Início</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Lista de Materiais</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </h:form>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>LISTA DE MATERIAIS</h3>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h:messages showDetail="true" class="alert #{mensagemFlash.ALERT}">
+                        <f:passThroughAttribute name="role" value="alert" />
+                    </h:messages>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <h:form id="form_lista_materiais_lista_opcoes">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <h:outputLink class="nav-link" value="material.xhtml">CADASTRO DE MATERIAL</h:outputLink>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+
+                <div class="col-sm-9">
+
+                    <h:form id="form_lista_material">
+                        <h:outputScript>load_masks();</h:outputScript>
+                        <div class="table-responsive">
+                            <h:dataTable value="#{materialController.listaMaterial}" var="linha_material" styleClass="table table-striped">
+                                <h:column>
+                                    <f:facet name="header">Código</f:facet>
+                                    <h:outputLink value="material.xhtml?id=#{linha_material.id}" disabled="#{usuarioController.temPermissao('material') eq false}">#{linha_material.id}</h:outputLink>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Nome</f:facet>
+                                    <h:outputLink value="material.xhtml?id=#{linha_material.id}" disabled="#{usuarioController.temPermissao('material') eq false}">#{linha_material.nome}</h:outputLink>
+                                </h:column>
+                                
+                            </h:dataTable>
+                        </div>
+
+                    </h:form>
+                </div>
+
+            </div>
+
+        </div><!-- /container -->
+    </h:body>
+
+    <f:subview id="footer">
+        <ui:include src="templates/footer.xhtml"/>
+    </f:subview>
+</html>
+

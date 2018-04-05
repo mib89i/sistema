@@ -20,29 +20,30 @@ import javax.persistence.Table;
  * @author claudemir
  */
 @Entity
-@Table(name = "produto")
-public class Produto implements Serializable {
+@Table(name = "material_produto")
+public class MaterialProduto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "nome", length = 200)
-    private String nome;
-    @JoinColumn(name = "id_medida", referencedColumnName = "id")
+    @JoinColumn(name = "id_material", referencedColumnName = "id")
     @ManyToOne
-    private Medida medida;
+    private Material material;
+    @JoinColumn(name = "id_produto", referencedColumnName = "id")
+    @ManyToOne
+    private Produto produto;
 
-    public Produto() {
+    public MaterialProduto() {
         this.id = null;
-        this.nome = "";
-        this.medida = new Medida();
+        this.material = new Material();
+        this.produto = new Produto();
     }
 
-    public Produto(Integer id, String nome, Medida medida) {
+    public MaterialProduto(Integer id, Material material, Produto produto) {
         this.id = id;
-        this.nome = nome;
-        this.medida = medida;
+        this.material = material;
+        this.produto = produto;
     }
 
     public Integer getId() {
@@ -53,20 +54,20 @@ public class Produto implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
-    public Medida getMedida() {
-        return medida;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setMedida(Medida medida) {
-        this.medida = medida;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
 }

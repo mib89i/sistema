@@ -13,19 +13,15 @@ public class Fornecedor implements Serializable {
     private Integer id;
     @Column(name = "nome", length = 1000)
     private String nome;
-    @Column(name = "cnpj", length = 100)
-    private String cnpj;
     
     public Fornecedor() {
         this.id = null;
         this.nome = "";
-        this.cnpj = "";
     }
 
-    public Fornecedor(Integer id, String nome, String cnpj) {
+    public Fornecedor(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
-        this.cnpj = cnpj;
     }
 
     public Integer getId() {
@@ -42,14 +38,6 @@ public class Fornecedor implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
     }
 
 }

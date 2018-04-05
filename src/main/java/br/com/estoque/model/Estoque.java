@@ -5,7 +5,10 @@
  */
 package br.com.estoque.model;
 
+import br.com.seguranca.model.Pessoa;
+import br.com.utilitarios.Datas;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -30,19 +35,37 @@ public class Estoque implements Serializable {
     @JoinColumn(name = "id_produto", referencedColumnName = "id")
     @ManyToOne
     private Produto produto;
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "id")
+    @ManyToOne
+    private Pessoa pessoa;
     @Column(name = "quantidade")
     private Integer quantidade;
+    @Column(name = "es")
+    private String es;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_estoque")
+    private Date data;
+    @Column(name = "hora_estoque", length = 8)
+    private String hora;
 
     public Estoque() {
         this.id = null;
         this.produto = new Produto();
-        this.quantidade = null;
+        this.pessoa = new Pessoa();
+        this.quantidade = 0;
+        this.es = "";
+        this.data = Datas.dataHoje();
+        this.hora = "";
     }
 
-    public Estoque(Integer id, Produto produto, Integer quantidade) {
+    public Estoque(Integer id, Produto produto, Pessoa pessoa, Integer quantidade, String es, Date data, String hora) {
         this.id = id;
         this.produto = produto;
+        this.pessoa = pessoa;
         this.quantidade = quantidade;
+        this.es = es;
+        this.data = data;
+        this.hora = hora;
     }
 
     public Integer getId() {
@@ -61,12 +84,44 @@ public class Estoque implements Serializable {
         this.produto = produto;
     }
 
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+
     public Integer getQuantidade() {
         return quantidade;
     }
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public String getEs() {
+        return es;
+    }
+
+    public void setEs(String es) {
+        this.es = es;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
 }

@@ -12,8 +12,12 @@
     <class>br.com.seguranca.model.Cargo</class>
     <class>br.com.seguranca.model.Fornecedor</class>
     <class>br.com.seguranca.model.Produto</class>
-    <class>br.com.seguranca.model.ProdutoFornecedor</class>
-    <class>br.com.seguranca.model.ProdutoFornecedorQuantidade</class>
+    <class>br.com.seguranca.model.Estoque</class>
+    <class>br.com.seguranca.model.EstoqueMaterial</class>
+    <class>br.com.seguranca.model.Material</class>
+    <class>br.com.seguranca.model.MaterialProduto</class>
+    <class>br.com.seguranca.model.Medida</class>
+    <class>br.com.seguranca.model.Produto</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/teste"/>

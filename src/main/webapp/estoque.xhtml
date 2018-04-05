@@ -59,14 +59,63 @@
 
                     <h:form id="form_estoque">
                         <h:outputScript>load_masks();</h:outputScript>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <h5>Produto</h5>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <h5 style="float: right">Quantidade</h5>
+                            </div>
+                        </div>
+
                         <ui:repeat value="#{estoqueController.listaEstoque}" var="linha_estoque">
-                            <h:panelGroup layout="block" class="row">
-                                <div class="col">
-                                    <h5>#{linha_estoque.produto.nome}</h5>
-                                    <h6>#{linha_estoque.quantidade}</h6>
+
+                            <div class="card #{linha_estoque.quantidade le 10 ? 'bg-danger text-white' : ''} ">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <p class="card-text">
+                                                <button class="btn btn-sm btn-outline-light" style="margin-right: 10px" data-toggle="modal" data-target="#adicionar_produto_#{linha_estoque.produto.id}" type="button"><i class="fas fa-plus"></i></button>
+                                                #{linha_estoque.produto.nome}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <p class="card-text" style="float: right; font-size: 14pt"><b>#{linha_estoque.quantidade}</b></p>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </h:panelGroup>
+                            </div>
+
+                            <br />
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="adicionar_produto_#{linha_estoque.produto.id}" tabindex="-1" role="dialog" aria-labelledby="adicionar_produtoLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">ADICIONAR ESTOQUE PARA: <b>#{linha_estoque.produto.nome}</b></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="modal-body">
+                                            <h5>Matérias Primas</h5>
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </ui:repeat>
+
+
                     </h:form>
                 </div>
 
